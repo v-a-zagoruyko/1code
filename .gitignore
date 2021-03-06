@@ -43,8 +43,7 @@ venv/
 
 
 # Frontend
-/frontend/node_modules/*
-frontend/node_modules
+/frontend/node_modules
 /frontend/dist
 
 
