@@ -1,0 +1,9 @@
+{
+  "arrowParens": "always",
+  "printWidth": 100,
+  "quoteProps": "consistent",
+  "singleQuote": true,
+  "eslintIntegration": true,
+  "trailingComma": "all",
+  "eol": "lf"
+}
