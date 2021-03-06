@@ -1,0 +1,18 @@
+FROM python:3.7.8 as build-backend
+ENV PYTHONUNBUFFERED=1 POETRY_VERSION=1.1.4
+
+RUN pip install --no-cache-dir "poetry==$POETRY_VERSION"
+
+WORKDIR /app/
+
+COPY poetry.lock pyproject.toml /app/
+
+RUN poetry config virtualenvs.create false && poetry install \
+    && pip install --no-cache-dir pip-tools uwsgi
+
+COPY ./ /app/
+
+WORKDIR /app/backend/
+
+ENTRYPOINT []
+CMD ["uwsgi", "/app/backend/uwsgi.ini"]

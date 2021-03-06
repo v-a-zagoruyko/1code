@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: onecode_backend:latest
+    command: python manage.py runserver 0.0.0.0:9000
+    ports:
+      - 9000:9000
+    volumes:
+      - .:/app/
+    env_file:
+      - .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=backend.settings
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:11.5
+    ports:
+      - 5431:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  frontend:
+    image: node:12.18.2-alpine3.11
+    working_dir: /app/
+    command: sh -c 'yarn && yarn start'
+    volumes:
+      - .:/app/
+
+volumes:
+  pgdata:
+    driver: local
